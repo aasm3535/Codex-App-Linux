@@ -1,6 +1,9 @@
 # Codex for Linux (Unofficial)
 
+
 Run OpenAI's Codex desktop app on Linux by extracting and patching the macOS version.
+
+
 
 ```
 ╔═══════════════════════════════════════════════════╗
