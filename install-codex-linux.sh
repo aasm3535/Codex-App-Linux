@@ -236,7 +236,10 @@ cat > package.json << 'PKGJSON'
   "scripts": {
     "start": "electron .",
     "start:debug": "electron . --enable-logging",
-    "rebuild:native": "electron-rebuild -f -w better-sqlite3,node-pty"
+    "rebuild:native": "electron-rebuild -f -w better-sqlite3,node-pty",
+    "build:appimage": "electron-builder --linux AppImage",
+    "build:linux": "npm run build:appimage",
+    "build:dir": "electron-builder --linux dir"
   },
   "dependencies": {
     "better-sqlite3": "^12.4.6",
@@ -252,7 +255,29 @@ cat > package.json << 'PKGJSON'
   },
   "devDependencies": {
     "electron": "40.0.0",
-    "@electron/rebuild": "^3.6.0"
+    "@electron/rebuild": "^3.6.0",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.community.codexlinux",
+    "productName": "Codex",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      ".vite/**/*",
+      "webview/**/*",
+      "native/**/*",
+      "package.json"
+    ],
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "category": "Development",
+      "executableName": "codex-linux",
+      "artifactName": "${productName}-${version}-${arch}.${ext}"
+    }
   }
 }
 PKGJSON

@@ -92,6 +92,24 @@ jobs:
           ./generate-open-source-notices.sh
           mv .automation/current-dmg.sha256 .automation/last-dmg.sha256
 
+      - name: Verify release artifacts
+        if: steps.dmg_check.outputs.changed == 'true'
+        run: |
+          set -euo pipefail
+          ls -lah codex-linux/dist || true
+          APPIMAGE_FILE="$(ls -1 codex-linux/dist/*.AppImage 2>/dev/null | head -n 1 || true)"
+          PORTABLE_FILE="$(ls -1 codex-linux/dist/Codex-portable-*.tar.gz 2>/dev/null | head -n 1 || true)"
+
+          if [ -z "${APPIMAGE_FILE}" ]; then
+            echo "AppImage was not generated."
+            exit 1
+          fi
+
+          if [ -z "${PORTABLE_FILE}" ]; then
+            echo "Portable tar.gz was not generated."
+            exit 1
+          fi
+
       - name: Commit metadata updates
         if: steps.dmg_check.outputs.changed == 'true'
         run: |
@@ -115,8 +133,8 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
-          APPIMAGE_FILE="$(ls -1 codex-linux/dist/*.AppImage | head -n 1)"
-          PORTABLE_FILE="$(ls -1 codex-linux/dist/Codex-portable-*.tar.gz | head -n 1)"
+          APPIMAGE_FILE="$(ls -1 codex-linux/dist/*.AppImage 2>/dev/null | head -n 1)"
+          PORTABLE_FILE="$(ls -1 codex-linux/dist/Codex-portable-*.tar.gz 2>/dev/null | head -n 1)"
           SHORT_HASH="$(echo "${{ steps.dmg_check.outputs.current_hash }}" | cut -c1-8)"
           TAG="auto-linux-${SHORT_HASH}-$(date -u +%Y%m%d%H%M)"
 
