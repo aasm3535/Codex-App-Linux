@@ -30,6 +30,45 @@ cd codex-linux
 ./codex-linux.sh
 ```
 
+## Build Linux Packages
+
+Build release artifacts (`AppImage` + `tar.gz`):
+
+```bash
+./build-codex-linux-release.sh
+```
+
+Output directory:
+
+```bash
+codex-linux/dist
+```
+
+If `electron-builder` is unavailable (for example in offline mode), the build script creates a portable `tar.gz` package as fallback.
+
+Install the latest built package (`AppImage` or portable `tar.gz`) into your user profile:
+
+```bash
+./install-codex-linux-appimage.sh
+```
+
+Or install a specific file:
+
+```bash
+./install-codex-linux-appimage.sh /path/to/Codex-1.0.0-linux-x86_64.AppImage
+./install-codex-linux-appimage.sh /path/to/Codex-portable-1.0.0-linux-x86_64.tar.gz
+```
+
+## Open Source Notices
+
+Generate a third-party dependencies notice file:
+
+```bash
+./generate-open-source-notices.sh
+```
+
+This writes `OPEN_SOURCE_NOTICES.md` in the repo root.
+
 ## Requirements
 
 - Linux (tested on Ubuntu 22.04+, should work on most distros)
@@ -65,13 +104,18 @@ See [PORTING-GUIDE.md](PORTING-GUIDE.md) for the full technical breakdown.
 | "CLI not found" | Run `npm install -g @openai/codex` |
 | Auth issues | Run `codex auth` in terminal first |
 | Sandbox errors | Script already uses `--no-sandbox` |
+| `better_sqlite3.node` missing / app crashes at startup | Run `cd codex-linux && npm run rebuild:native` |
+| `dlopen(): error loading libfuse.so.2` on AppImage | Re-run `./install-codex-linux-appimage.sh` (launcher has no-FUSE fallback) |
 
 ## Files
 
 ```
-├── install-codex-linux.sh   # One-click installer
-├── PORTING-GUIDE.md         # Technical deep-dive
-└── README.md                # You are here
+├── install-codex-linux.sh           # DMG -> runnable Linux app
+├── build-codex-linux-release.sh     # Build AppImage + tar.gz
+├── install-codex-linux-appimage.sh  # Install built AppImage/tar.gz
+├── generate-open-source-notices.sh  # Generate OSS notices
+├── OPEN_SOURCE_NOTICES.md           # Generated dependency notices
+└── README.md                        # You are here
 ```
 
 ## Legal

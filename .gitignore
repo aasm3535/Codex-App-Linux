@@ -1,0 +1,21 @@
+# Local binaries and extracted app payloads
+Codex.dmg
+codex-linux/
+codex_extracted/
+codex_app_src/
+local/
+
+# Temporary and generated logs
+*.log
+7z_output.log
+
+# Node artifacts
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build outputs
+dist/
+*.AppImage

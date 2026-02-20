@@ -8,7 +8,7 @@
 #   ./install-codex-linux.sh
 #
 
-set -e
+set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
@@ -25,6 +25,29 @@ success() { echo -e "${GREEN}[✓]${NC} $1"; }
 warn() { echo -e "${YELLOW}[!]${NC} $1"; }
 error() { echo -e "${RED}[✗]${NC} $1"; exit 1; }
 
+has_module_binding() {
+    local module_dir="$1"
+    local pattern="$2"
+    find "${module_dir}" -type f -name "${pattern}" -print -quit 2>/dev/null | grep -q .
+}
+
+verify_native_bindings() {
+    local root_dir="$1"
+    local ok=0
+
+    if ! has_module_binding "${root_dir}/node_modules/better-sqlite3" "better_sqlite3.node"; then
+        warn "Missing native binding: better-sqlite3/better_sqlite3.node"
+        ok=1
+    fi
+
+    if ! has_module_binding "${root_dir}/node_modules/node-pty" "*.node"; then
+        warn "Missing native binding: node-pty/*.node"
+        ok=1
+    fi
+
+    return "${ok}"
+}
+
 echo ""
 echo -e "${CYAN}╔═══════════════════════════════════════════════════╗${NC}"
 echo -e "${CYAN}║       Codex Linux Installer (Unofficial)          ║${NC}"
@@ -38,7 +61,7 @@ echo ""
 log "Checking prerequisites..."
 
 # Check for Codex.dmg
-DMG_FILE=$(find "$SCRIPT_DIR" -maxdepth 1 -name "*.dmg" -o -name "Codex.dmg" 2>/dev/null | head -1)
+DMG_FILE=$(find "$SCRIPT_DIR" -maxdepth 1 -type f \( -name "*.dmg" -o -name "Codex.dmg" \) 2>/dev/null | head -1)
 if [ -z "$DMG_FILE" ]; then
     error "Codex.dmg not found. Place it in: $SCRIPT_DIR"
 fi
@@ -83,7 +106,7 @@ log "Extracting DMG (this may take a moment)..."
 rm -rf "$SCRIPT_DIR/codex_extracted" 2>/dev/null || true
 
 # Extract - ignore symlink errors (e.g., /Applications symlink in DMG)
-$SEVEN_ZIP x "$DMG_FILE" -o"$SCRIPT_DIR/codex_extracted" -y > /tmp/7z_output.log 2>&1 || true
+$SEVEN_ZIP x "$DMG_FILE" -o"$SCRIPT_DIR/codex_extracted" -y > "$SCRIPT_DIR/7z_output.log" 2>&1 || true
 
 # Find app.asar - it's nested in the .app bundle
 ASAR_PATH=$(find "$SCRIPT_DIR/codex_extracted" -name "app.asar" -type f 2>/dev/null | head -1)
@@ -99,17 +122,17 @@ success "Extracted DMG, found: $ASAR_PATH"
 # Phase 4: Extract ASAR
 # ─────────────────────────────────────────────────────────────
 log "Installing asar tool..."
-if ! command -v asar &> /dev/null; then
-    npm install -g @electron/asar 2>&1 | tail -3 || {
+if ! npm list -g @electron/asar &>/dev/null; then
+    if ! sudo npm install -g @electron/asar; then
         warn "Global install failed, trying local..."
-        npm install @electron/asar 2>&1 | tail -3
-    }
+        npm install @electron/asar || error "Failed to install @electron/asar"
+    fi
 fi
 success "asar tool ready"
 
 log "Extracting application source..."
 rm -rf "$SCRIPT_DIR/codex_app_src" 2>/dev/null || true
-if ! asar extract "$ASAR_PATH" "$SCRIPT_DIR/codex_app_src"; then
+if ! npx @electron/asar extract "$ASAR_PATH" "$SCRIPT_DIR/codex_app_src"; then
     error "Failed to extract app.asar"
 fi
 success "Application source extracted"
@@ -159,7 +182,8 @@ cat > package.json << 'PKGJSON'
   "main": ".vite/build/main.js",
   "scripts": {
     "start": "electron .",
-    "start:debug": "electron . --enable-logging"
+    "start:debug": "electron . --enable-logging",
+    "rebuild:native": "electron-rebuild -f -w better-sqlite3,node-pty"
   },
   "dependencies": {
     "better-sqlite3": "^12.4.6",
@@ -181,7 +205,7 @@ cat > package.json << 'PKGJSON'
 PKGJSON
 
 log "Installing npm dependencies (this takes a few minutes)..."
-if ! npm install 2>&1 | tail -10; then
+if ! npm install; then
     error "npm install failed"
 fi
 success "Dependencies installed"
@@ -190,8 +214,12 @@ success "Dependencies installed"
 # Phase 7: Rebuild Native Modules
 # ─────────────────────────────────────────────────────────────
 log "Rebuilding native modules for Electron..."
-if ! npx @electron/rebuild 2>&1 | tail -5; then
-    warn "Rebuild had issues, continuing anyway..."
+if ! npm run rebuild:native; then
+    error "Native rebuild failed. Check network/build toolchain and rerun installer."
+fi
+
+if ! verify_native_bindings "$PROJECT_DIR"; then
+    error "Native bindings are missing after rebuild. Installation aborted."
 fi
 success "Native modules rebuilt for Linux"
 
@@ -261,6 +289,7 @@ fi
 log "Cleaning up temporary files..."
 rm -rf "$SCRIPT_DIR/codex_extracted" 2>/dev/null || true
 rm -rf "$SCRIPT_DIR/codex_app_src" 2>/dev/null || true
+rm -f "$SCRIPT_DIR/7z_output.log" 2>/dev/null || true
 success "Cleanup complete"
 
 # ─────────────────────────────────────────────────────────────
