@@ -40,6 +40,26 @@ codex-linux/dist/Codex-1.0.0-linux-x86_64.AppImage
 codex-linux/dist/Codex-portable-1.0.0-linux-x86_64.tar.gz
 ```
 
+## Automatic Linux Releases (GitHub Actions)
+
+This repo includes workflow: `.github/workflows/auto-port-release.yml`
+
+What it does:
+- On schedule (`daily`) or manual run (`workflow_dispatch`), downloads latest `Codex.dmg`
+- Compares SHA256 with previous run (`.automation/last-dmg.sha256`)
+- If changed, rebuilds Linux port, builds artifacts, updates notices, creates GitHub Release
+
+Setup:
+1. Go to repo settings -> `Secrets and variables` -> `Actions`
+2. Create secret: `CODEX_DMG_URL` with direct download URL to `Codex.dmg`
+3. Ensure Actions are enabled for the repository
+4. Run the workflow manually once from `Actions` tab to validate
+
+Notes:
+- Manual run supports input `dmg_url` to override the secret for one run
+- Scheduled run skips release if DMG hash is unchanged
+- Release assets include AppImage and portable tar.gz
+
 ## Port From Codex.dmg (Generate Linux Project)
 
 If you want to rebuild the Linux project from the original macOS package:
@@ -87,6 +107,8 @@ build-codex-linux-release.sh       # Build AppImage + portable tar.gz
 install-codex-linux-appimage.sh    # Install AppImage/tar.gz into ~/.local
 generate-open-source-notices.sh    # Generate OSS notices
 OPEN_SOURCE_NOTICES.md             # Generated dependency notices
+.github/workflows/auto-port-release.yml  # Automated port/build/release pipeline
+.automation/last-dmg.sha256        # Last processed Codex.dmg hash
 ```
 
 ## Legal

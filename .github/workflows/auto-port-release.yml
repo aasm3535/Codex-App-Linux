@@ -1,0 +1,128 @@
+name: Auto Port And Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      dmg_url:
+        description: "Optional direct URL to Codex.dmg (overrides CODEX_DMG_URL secret)"
+        required: false
+        type: string
+  schedule:
+    - cron: "30 4 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  auto-port-release:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Linux packaging dependencies
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y p7zip-full rpm fakeroot desktop-file-utils
+
+      - name: Resolve DMG URL
+        id: resolve_url
+        env:
+          INPUT_DMG_URL: ${{ github.event.inputs.dmg_url }}
+          SECRET_DMG_URL: ${{ secrets.CODEX_DMG_URL }}
+        run: |
+          set -euo pipefail
+          DMG_URL="${INPUT_DMG_URL:-}"
+          if [ -z "${DMG_URL}" ]; then
+            DMG_URL="${SECRET_DMG_URL:-}"
+          fi
+          if [ -z "${DMG_URL}" ]; then
+            echo "CODEX_DMG_URL is empty. Set repository secret CODEX_DMG_URL or pass workflow input dmg_url."
+            exit 1
+          fi
+          echo "dmg_url=${DMG_URL}" >> "$GITHUB_OUTPUT"
+
+      - name: Download Codex.dmg
+        run: |
+          set -euo pipefail
+          curl -fL "${{ steps.resolve_url.outputs.dmg_url }}" -o Codex.dmg
+
+      - name: Check DMG hash change
+        id: dmg_check
+        run: |
+          set -euo pipefail
+          mkdir -p .automation
+
+          CURRENT_HASH="$(sha256sum Codex.dmg | awk '{print $1}')"
+          PREVIOUS_HASH=""
+          if [ -f .automation/last-dmg.sha256 ]; then
+            PREVIOUS_HASH="$(cat .automation/last-dmg.sha256)"
+          fi
+
+          echo "current_hash=${CURRENT_HASH}" >> "$GITHUB_OUTPUT"
+          echo "${CURRENT_HASH}" > .automation/current-dmg.sha256
+
+          if [ "${{ github.event_name }}" = "schedule" ] && [ "${CURRENT_HASH}" = "${PREVIOUS_HASH}" ]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Skip (no update on schedule)
+        if: steps.dmg_check.outputs.changed == 'false'
+        run: echo "No Codex.dmg change detected. Skipping build and release."
+
+      - name: Port app and build Linux artifacts
+        if: steps.dmg_check.outputs.changed == 'true'
+        run: |
+          set -euo pipefail
+          chmod +x install-codex-linux.sh build-codex-linux-release.sh generate-open-source-notices.sh
+          ./install-codex-linux.sh
+          ./build-codex-linux-release.sh
+          ./generate-open-source-notices.sh
+          mv .automation/current-dmg.sha256 .automation/last-dmg.sha256
+
+      - name: Commit metadata updates
+        if: steps.dmg_check.outputs.changed == 'true'
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add .automation/last-dmg.sha256 OPEN_SOURCE_NOTICES.md
+          if git diff --cached --quiet; then
+            echo "No metadata changes to commit."
+            exit 0
+          fi
+
+          SHORT_HASH="$(echo "${{ steps.dmg_check.outputs.current_hash }}" | cut -c1-12)"
+          git commit -m "chore: auto-update Linux release metadata (${SHORT_HASH})"
+          git push
+
+      - name: Create GitHub release
+        if: steps.dmg_check.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          APPIMAGE_FILE="$(ls -1 codex-linux/dist/*.AppImage | head -n 1)"
+          PORTABLE_FILE="$(ls -1 codex-linux/dist/Codex-portable-*.tar.gz | head -n 1)"
+          SHORT_HASH="$(echo "${{ steps.dmg_check.outputs.current_hash }}" | cut -c1-8)"
+          TAG="auto-linux-${SHORT_HASH}-$(date -u +%Y%m%d%H%M)"
+
+          gh release create "${TAG}" \
+            "${APPIMAGE_FILE}" \
+            "${PORTABLE_FILE}" \
+            OPEN_SOURCE_NOTICES.md \
+            --title "Auto Linux Release ${TAG}" \
+            --notes "Automated Linux port release from latest Codex.dmg."
