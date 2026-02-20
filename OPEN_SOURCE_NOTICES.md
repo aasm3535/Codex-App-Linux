@@ -1,6 +1,6 @@
 # Open Source Notices
 
-Generated on 2026-02-20T08:37:12.480Z from installed npm dependencies in `codex-linux/node_modules`.
+Generated on 2026-02-20T09:56:01.536Z from installed npm dependencies in `codex-linux/node_modules`.
 
 | Package | Version | License | Homepage/Repository |
 | --- | --- | --- | --- |
