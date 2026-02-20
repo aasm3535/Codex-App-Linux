@@ -48,6 +48,41 @@ verify_native_bindings() {
     return "${ok}"
 }
 
+find_app_asar() {
+    find "$SCRIPT_DIR/codex_extracted" -name "app.asar" -type f 2>/dev/null | head -1 || true
+}
+
+extract_dmg_direct() {
+    "$SEVEN_ZIP" x "$DMG_FILE" -o"$SCRIPT_DIR/codex_extracted" -y >> "$SCRIPT_DIR/7z_output.log" 2>&1 || true
+}
+
+extract_nested_images() {
+    local found_nested=0
+    while IFS= read -r image_file; do
+        found_nested=1
+        "$SEVEN_ZIP" x "$image_file" -o"$SCRIPT_DIR/codex_extracted" -y >> "$SCRIPT_DIR/7z_output.log" 2>&1 || true
+    done < <(find "$SCRIPT_DIR/codex_extracted" -maxdepth 4 -type f \( -name "*.hfs" -o -name "*.img" -o -name "*.dmg" \) 2>/dev/null || true)
+
+    return $((1 - found_nested))
+}
+
+extract_via_dmg2img() {
+    if ! command -v dmg2img &>/dev/null; then
+        return 1
+    fi
+
+    local converted_img
+    converted_img="$(mktemp /tmp/codex-dmg2img-XXXXXX.img)"
+    if ! dmg2img "$DMG_FILE" "$converted_img" >> "$SCRIPT_DIR/7z_output.log" 2>&1; then
+        rm -f "$converted_img"
+        return 1
+    fi
+
+    "$SEVEN_ZIP" x "$converted_img" -o"$SCRIPT_DIR/codex_extracted" -y >> "$SCRIPT_DIR/7z_output.log" 2>&1 || true
+    rm -f "$converted_img"
+    return 0
+}
+
 echo ""
 echo -e "${CYAN}╔═══════════════════════════════════════════════════╗${NC}"
 echo -e "${CYAN}║       Codex Linux Installer (Unofficial)          ║${NC}"
@@ -104,14 +139,32 @@ success "7zip ready: $SEVEN_ZIP"
 log "Extracting DMG (this may take a moment)..."
 
 rm -rf "$SCRIPT_DIR/codex_extracted" 2>/dev/null || true
+mkdir -p "$SCRIPT_DIR/codex_extracted"
+: > "$SCRIPT_DIR/7z_output.log"
 
-# Extract - ignore symlink errors (e.g., /Applications symlink in DMG)
-$SEVEN_ZIP x "$DMG_FILE" -o"$SCRIPT_DIR/codex_extracted" -y > "$SCRIPT_DIR/7z_output.log" 2>&1 || true
+# Method 1: direct extraction
+extract_dmg_direct
+ASAR_PATH="$(find_app_asar)"
 
-# Find app.asar - it's nested in the .app bundle
-ASAR_PATH=$(find "$SCRIPT_DIR/codex_extracted" -name "app.asar" -type f 2>/dev/null | head -1)
+# Method 2: nested image extraction from direct output
+if [ -z "$ASAR_PATH" ]; then
+    warn "Direct extraction did not expose app.asar, trying nested image extraction..."
+    extract_nested_images || true
+    ASAR_PATH="$(find_app_asar)"
+fi
+
+# Method 3: dmg2img fallback (for some DMG layouts)
+if [ -z "$ASAR_PATH" ]; then
+    warn "Trying dmg2img fallback extraction..."
+    rm -rf "$SCRIPT_DIR/codex_extracted" 2>/dev/null || true
+    mkdir -p "$SCRIPT_DIR/codex_extracted"
+    extract_via_dmg2img || true
+    ASAR_PATH="$(find_app_asar)"
+fi
 
 if [ -z "$ASAR_PATH" ]; then
+    warn "7z log tail:"
+    tail -n 80 "$SCRIPT_DIR/7z_output.log" || true
     log "Contents of extracted folder:"
     find "$SCRIPT_DIR/codex_extracted" -maxdepth 4 -type d 2>/dev/null | head -20
     error "app.asar not found. Is this a valid Codex DMG?"
