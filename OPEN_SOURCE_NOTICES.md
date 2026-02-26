@@ -1,6 +1,6 @@
 # Open Source Notices
 
-Generated on 2026-02-20T10:03:56.416Z from installed npm dependencies in `codex-linux/node_modules`.
+Generated on 2026-02-26T05:42:36.572Z from installed npm dependencies in `codex-linux/node_modules`.
 
 | Package | Version | License | Homepage/Repository |
 | --- | --- | --- | --- |
@@ -29,7 +29,7 @@ Generated on 2026-02-20T10:03:56.416Z from installed npm dependencies in `codex-
 | @types/http-cache-semantics | 4.2.0 | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/http-cache-semantics |
 | @types/keyv | 3.1.4 | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/keyv |
 | @types/ms | 2.1.0 | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ms |
-| @types/node | 24.10.13 | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/node |
+| @types/node | 24.10.14 | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/node |
 | @types/responselike | 1.0.3 | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/responselike |
 | @types/yauzl | 2.10.3 | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/yauzl |
 | @xmldom/xmldom | 0.8.11 | MIT | https://github.com/xmldom/xmldom |
@@ -39,7 +39,7 @@ Generated on 2026-02-20T10:03:56.416Z from installed npm dependencies in `codex-
 | agent-base | 7.1.4 | MIT | https://github.com/TooTallNate/proxy-agents.git |
 | agentkeepalive | 4.6.0 | MIT | git://github.com/node-modules/agentkeepalive.git |
 | aggregate-error | 3.1.0 | MIT | sindresorhus/aggregate-error |
-| ajv | 6.12.6 | MIT | https://github.com/ajv-validator/ajv |
+| ajv | 6.14.0 | MIT | https://github.com/ajv-validator/ajv |
 | ajv-keywords | 3.5.2 | MIT | https://github.com/epoberezkin/ajv-keywords#readme |
 | ansi-regex | 5.0.1 | MIT | chalk/ansi-regex |
 | ansi-regex | 6.2.2 | MIT | chalk/ansi-regex |
@@ -58,7 +58,7 @@ Generated on 2026-02-20T10:03:56.416Z from installed npm dependencies in `codex-
 | asynckit | 0.4.0 | MIT | https://github.com/alexindigo/asynckit#readme |
 | at-least-node | 1.0.0 | ISC | https://github.com/RyanZim/at-least-node#readme |
 | balanced-match | 1.0.2 | MIT | https://github.com/juliangruber/balanced-match |
-| balanced-match | 4.0.3 | MIT | git://github.com/juliangruber/balanced-match.git |
+| balanced-match | 4.0.4 | MIT | git://github.com/juliangruber/balanced-match.git |
 | base64-js | 1.5.1 | MIT | https://github.com/beatgammit/base64-js |
 | better-sqlite3 | 12.6.2 | MIT | http://github.com/WiseLibs/better-sqlite3 |
 | bindings | 1.5.0 | MIT | https://github.com/TooTallNate/node-bindings |
@@ -68,7 +68,7 @@ Generated on 2026-02-20T10:03:56.416Z from installed npm dependencies in `codex-
 | boolean | 3.2.0 | MIT | git://github.com/thenativeweb/boolean.git |
 | brace-expansion | 1.1.12 | MIT | https://github.com/juliangruber/brace-expansion |
 | brace-expansion | 2.0.2 | MIT | https://github.com/juliangruber/brace-expansion |
-| brace-expansion | 5.0.2 | MIT | git+ssh://git@github.com/juliangruber/brace-expansion.git |
+| brace-expansion | 5.0.3 | MIT | git+ssh://git@github.com/juliangruber/brace-expansion.git |
 | buffer | 5.7.1 | MIT | https://github.com/feross/buffer |
 | buffer-crc32 | 0.2.13 | MIT | https://github.com/brianloveswords/buffer-crc32 |
 | buffer-from | 1.1.2 | MIT | LinusU/buffer-from |
@@ -156,7 +156,7 @@ Generated on 2026-02-20T10:03:56.416Z from installed npm dependencies in `codex-
 | fast-json-stable-stringify | 2.1.0 | MIT | https://github.com/epoberezkin/fast-json-stable-stringify |
 | fd-slicer | 1.1.0 | MIT | git://github.com/andrewrk/node-fd-slicer.git |
 | file-uri-to-path | 1.0.0 | MIT | https://github.com/TooTallNate/file-uri-to-path |
-| filelist | 1.0.4 | Apache-2.0 | https://github.com/mde/filelist |
+| filelist | 1.0.6 | Apache-2.0 | https://github.com/mde/filelist |
 | foreground-child | 3.3.1 | ISC | git+https://github.com/tapjs/foreground-child.git |
 | form-data | 4.0.5 | MIT | git://github.com/form-data/form-data.git |
 | fs-constants | 1.0.0 | MIT | https://github.com/mafintosh/fs-constants |
@@ -253,10 +253,10 @@ Generated on 2026-02-20T10:03:56.416Z from installed npm dependencies in `codex-
 | mimic-fn | 2.1.0 | MIT | sindresorhus/mimic-fn |
 | mimic-response | 1.0.1 | MIT | sindresorhus/mimic-response |
 | mimic-response | 3.1.0 | MIT | sindresorhus/mimic-response |
-| minimatch | 10.2.2 | BlueOak-1.0.0 | git@github.com:isaacs/minimatch |
-| minimatch | 3.1.2 | ISC | git://github.com/isaacs/minimatch.git |
-| minimatch | 5.1.6 | ISC | git://github.com/isaacs/minimatch.git |
-| minimatch | 9.0.5 | ISC | git://github.com/isaacs/minimatch.git |
+| minimatch | 10.2.4 | BlueOak-1.0.0 | git@github.com:isaacs/minimatch |
+| minimatch | 3.1.5 | ISC | git://github.com/isaacs/minimatch.git |
+| minimatch | 5.1.9 | ISC | git://github.com/isaacs/minimatch.git |
+| minimatch | 9.0.8 | ISC | git://github.com/isaacs/minimatch.git |
 | minimist | 1.2.8 | MIT | https://github.com/minimistjs/minimist |
 | minipass | 3.3.6 | ISC | git+https://github.com/isaacs/minipass.git |
 | minipass | 5.0.0 | ISC | git+https://github.com/isaacs/minipass.git |
