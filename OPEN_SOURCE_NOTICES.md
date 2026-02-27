@@ -1,6 +1,6 @@
 # Open Source Notices
 
-Generated on 2026-02-26T05:42:36.572Z from installed npm dependencies in `codex-linux/node_modules`.
+Generated on 2026-02-27T05:38:51.509Z from installed npm dependencies in `codex-linux/node_modules`.
 
 | Package | Version | License | Homepage/Repository |
 | --- | --- | --- | --- |
@@ -29,7 +29,7 @@ Generated on 2026-02-26T05:42:36.572Z from installed npm dependencies in `codex-
 | @types/http-cache-semantics | 4.2.0 | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/http-cache-semantics |
 | @types/keyv | 3.1.4 | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/keyv |
 | @types/ms | 2.1.0 | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ms |
-| @types/node | 24.10.14 | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/node |
+| @types/node | 24.10.15 | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/node |
 | @types/responselike | 1.0.3 | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/responselike |
 | @types/yauzl | 2.10.3 | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/yauzl |
 | @xmldom/xmldom | 0.8.11 | MIT | https://github.com/xmldom/xmldom |
@@ -256,7 +256,7 @@ Generated on 2026-02-26T05:42:36.572Z from installed npm dependencies in `codex-
 | minimatch | 10.2.4 | BlueOak-1.0.0 | git@github.com:isaacs/minimatch |
 | minimatch | 3.1.5 | ISC | git://github.com/isaacs/minimatch.git |
 | minimatch | 5.1.9 | ISC | git://github.com/isaacs/minimatch.git |
-| minimatch | 9.0.8 | ISC | git://github.com/isaacs/minimatch.git |
+| minimatch | 9.0.9 | ISC | git://github.com/isaacs/minimatch.git |
 | minimist | 1.2.8 | MIT | https://github.com/minimistjs/minimist |
 | minipass | 3.3.6 | ISC | git+https://github.com/isaacs/minipass.git |
 | minipass | 5.0.0 | ISC | git+https://github.com/isaacs/minipass.git |
@@ -353,7 +353,7 @@ Generated on 2026-02-26T05:42:36.572Z from installed npm dependencies in `codex-
 | string-width | 4.2.3 | MIT | sindresorhus/string-width |
 | string-width | 5.1.2 | MIT | sindresorhus/string-width |
 | strip-ansi | 6.0.1 | MIT | chalk/strip-ansi |
-| strip-ansi | 7.1.2 | MIT | chalk/strip-ansi |
+| strip-ansi | 7.2.0 | MIT | chalk/strip-ansi |
 | strip-final-newline | 2.0.0 | MIT | sindresorhus/strip-final-newline |
 | strip-json-comments | 2.0.1 | MIT | sindresorhus/strip-json-comments |
 | sumchecker | 3.0.1 | Apache-2.0 | https://github.com/malept/sumchecker#readme |
