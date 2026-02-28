@@ -1,6 +1,6 @@
 # Open Source Notices
 
-Generated on 2026-02-27T05:38:51.509Z from installed npm dependencies in `codex-linux/node_modules`.
+Generated on 2026-02-28T05:10:09.639Z from installed npm dependencies in `codex-linux/node_modules`.
 
 | Package | Version | License | Homepage/Repository |
 | --- | --- | --- | --- |
@@ -29,7 +29,7 @@ Generated on 2026-02-27T05:38:51.509Z from installed npm dependencies in `codex-
 | @types/http-cache-semantics | 4.2.0 | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/http-cache-semantics |
 | @types/keyv | 3.1.4 | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/keyv |
 | @types/ms | 2.1.0 | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ms |
-| @types/node | 24.10.15 | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/node |
+| @types/node | 24.11.0 | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/node |
 | @types/responselike | 1.0.3 | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/responselike |
 | @types/yauzl | 2.10.3 | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/yauzl |
 | @xmldom/xmldom | 0.8.11 | MIT | https://github.com/xmldom/xmldom |
@@ -68,7 +68,7 @@ Generated on 2026-02-27T05:38:51.509Z from installed npm dependencies in `codex-
 | boolean | 3.2.0 | MIT | git://github.com/thenativeweb/boolean.git |
 | brace-expansion | 1.1.12 | MIT | https://github.com/juliangruber/brace-expansion |
 | brace-expansion | 2.0.2 | MIT | https://github.com/juliangruber/brace-expansion |
-| brace-expansion | 5.0.3 | MIT | git+ssh://git@github.com/juliangruber/brace-expansion.git |
+| brace-expansion | 5.0.4 | MIT | git+ssh://git@github.com/juliangruber/brace-expansion.git |
 | buffer | 5.7.1 | MIT | https://github.com/feross/buffer |
 | buffer-crc32 | 0.2.13 | MIT | https://github.com/brianloveswords/buffer-crc32 |
 | buffer-from | 1.1.2 | MIT | LinusU/buffer-from |
