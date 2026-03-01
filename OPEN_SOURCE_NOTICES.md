@@ -1,6 +1,6 @@
 # Open Source Notices
 
-Generated on 2026-02-28T05:10:09.639Z from installed npm dependencies in `codex-linux/node_modules`.
+Generated on 2026-03-01T05:38:18.607Z from installed npm dependencies in `codex-linux/node_modules`.
 
 | Package | Version | License | Homepage/Repository |
 | --- | --- | --- | --- |
@@ -304,7 +304,7 @@ Generated on 2026-02-28T05:10:09.639Z from installed npm dependencies in `codex-
 | progress | 2.0.3 | MIT | git://github.com/visionmedia/node-progress |
 | promise-inflight | 1.0.1 | ISC | https://github.com/iarna/promise-inflight#readme |
 | promise-retry | 2.0.1 | MIT | git://github.com/IndigoUnited/node-promise-retry.git |
-| pump | 3.0.3 | MIT | git://github.com/mafintosh/pump.git |
+| pump | 3.0.4 | MIT | git://github.com/mafintosh/pump.git |
 | punycode | 2.3.1 | MIT | https://mths.be/punycode |
 | quick-lru | 5.1.1 | MIT | sindresorhus/quick-lru |
 | rc | 1.2.8 | (BSD-2-Clause OR MIT OR Apache-2.0) | https://github.com/dominictarr/rc.git |
