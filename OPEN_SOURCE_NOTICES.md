@@ -1,6 +1,6 @@
 # Open Source Notices
 
-Generated on 2026-03-01T05:38:18.607Z from installed npm dependencies in `codex-linux/node_modules`.
+Generated on 2026-03-04T05:32:40.350Z from installed npm dependencies in `codex-linux/node_modules`.
 
 | Package | Version | License | Homepage/Repository |
 | --- | --- | --- | --- |
@@ -161,7 +161,7 @@ Generated on 2026-03-01T05:38:18.607Z from installed npm dependencies in `codex-
 | form-data | 4.0.5 | MIT | git://github.com/form-data/form-data.git |
 | fs-constants | 1.0.0 | MIT | https://github.com/mafintosh/fs-constants |
 | fs-extra | 10.1.0 | MIT | https://github.com/jprichardson/node-fs-extra |
-| fs-extra | 11.3.3 | MIT | https://github.com/jprichardson/node-fs-extra |
+| fs-extra | 11.3.4 | MIT | https://github.com/jprichardson/node-fs-extra |
 | fs-extra | 8.1.0 | MIT | https://github.com/jprichardson/node-fs-extra |
 | fs-extra | 9.1.0 | MIT | https://github.com/jprichardson/node-fs-extra |
 | fs-minipass | 2.1.0 | ISC | https://github.com/npm/fs-minipass#readme |
@@ -324,7 +324,7 @@ Generated on 2026-03-01T05:38:18.607Z from installed npm dependencies in `codex-
 | safe-buffer | 5.2.1 | MIT | https://github.com/feross/safe-buffer |
 | safer-buffer | 2.1.2 | MIT | git+https://github.com/ChALkeR/safer-buffer.git |
 | sanitize-filename | 1.6.3 | WTFPL OR ISC | git@github.com:parshap/node-sanitize-filename.git |
-| sax | 1.4.4 | BlueOak-1.0.0 | git://github.com/isaacs/sax-js.git |
+| sax | 1.5.0 | BlueOak-1.0.0 | git://github.com/isaacs/sax-js.git |
 | semver | 6.3.1 | ISC | https://github.com/npm/node-semver.git |
 | semver | 7.7.4 | ISC | git+https://github.com/npm/node-semver.git |
 | semver-compare | 1.0.0 | MIT | https://github.com/substack/semver-compare |
