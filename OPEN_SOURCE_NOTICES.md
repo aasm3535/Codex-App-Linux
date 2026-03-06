@@ -1,6 +1,6 @@
 # Open Source Notices
 
-Generated on 2026-03-04T05:32:40.350Z from installed npm dependencies in `codex-linux/node_modules`.
+Generated on 2026-03-06T05:34:04.873Z from installed npm dependencies in `codex-linux/node_modules`.
 
 | Package | Version | License | Homepage/Repository |
 | --- | --- | --- | --- |
@@ -29,7 +29,7 @@ Generated on 2026-03-04T05:32:40.350Z from installed npm dependencies in `codex-
 | @types/http-cache-semantics | 4.2.0 | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/http-cache-semantics |
 | @types/keyv | 3.1.4 | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/keyv |
 | @types/ms | 2.1.0 | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ms |
-| @types/node | 24.11.0 | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/node |
+| @types/node | 24.12.0 | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/node |
 | @types/responselike | 1.0.3 | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/responselike |
 | @types/yauzl | 2.10.3 | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/yauzl |
 | @xmldom/xmldom | 0.8.11 | MIT | https://github.com/xmldom/xmldom |
